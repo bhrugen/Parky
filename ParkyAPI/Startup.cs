@@ -14,6 +14,8 @@ using Microsoft.Extensions.Logging;
 using ParkyAPI.Data;
 using ParkyAPI.Repository;
 using ParkyAPI.Repository.IRepository;
+using AutoMapper;
+using ParkyAPI.ParkyMapper;
 
 namespace ParkyAPI
 {
@@ -33,7 +35,7 @@ namespace ParkyAPI
                 (options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<INationalParkRepository, NationalParkRepository>();
-
+            services.AddAutoMapper(typeof(ParkyMappings));
             services.AddControllers();
         }
 
