@@ -15,7 +15,7 @@ namespace ParkyAPI.Controllers
     [ApiController]
     public class NationalParksController : Controller
     {
-        private INationalParkRepository _npRepo;
+        private readonly INationalParkRepository _npRepo;
         private readonly IMapper _mapper;
 
         public NationalParksController(INationalParkRepository npRepo, IMapper mapper)
