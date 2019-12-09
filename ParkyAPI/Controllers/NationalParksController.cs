@@ -56,22 +56,37 @@ namespace ParkyAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-
             if (_npRepo.NationalParkExists(nationalParkDto.Name))
             {
                 ModelState.AddModelError("", "National Park Exists!");
                 return StatusCode(404, ModelState);
             }
-
             var nationalParkObj = _mapper.Map<NationalPark>(nationalParkDto);
-
             if (!_npRepo.CreateNationalPark(nationalParkObj))
             {
                 ModelState.AddModelError("", $"Something went wrong when saving the record {nationalParkObj.Name}");
                 return StatusCode(500, ModelState);
             }
-
             return CreatedAtRoute("GetNationalPark", new { nationalParkId= nationalParkObj.Id }, nationalParkObj);
+        }
+
+        [HttpPatch("{nationalParkId:int}", Name = "UpdateNationalPark")]
+        public IActionResult UpdateNationalPark(int nationalParkId, [FromBody] NationalParkDto nationalParkDto)
+        {
+            if (nationalParkDto == null || nationalParkId!=nationalParkDto.Id)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var nationalParkObj = _mapper.Map<NationalPark>(nationalParkDto);
+            if (!_npRepo.UpdateNationalPark(nationalParkObj))
+            {
+                ModelState.AddModelError("", $"Something went wrong when updating the record {nationalParkObj.Name}");
+                return StatusCode(500, ModelState);
+            }
+
+            return NoContent();
+
         }
 
     }
