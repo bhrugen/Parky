@@ -1,5 +1,5 @@
 ﻿@model ParkyWeb.Models.NationalPark
-@{ 
+@{
     var title = "Create National Park";
 }
 
@@ -40,7 +40,7 @@
                 </div>
                 <div class="col-8">
                     <input type="file" asp-for="Picture" id="projectImage" name="files" multiple class="form-control" />
-                    
+
                 </div>
             </div>
             <div class="form-group row">
@@ -48,7 +48,7 @@
                     <label asp-for="Established"></label>
                 </div>
                 <div class="col-8">
-                    @{ 
+                    @{
                         var dateEst = "";
                         if (Model.Id != 0)
                         {
@@ -60,15 +60,39 @@
             </div>
             <div class="form-group row">
                 <div class="col-4 offset-4">
+                    <button type="submit" class="btn btn-primary form-control">
+                        @(Model.Id != 0 ? "Update" : "Create")
+                    </button>
                 </div>
                 <div class="col-4">
-                    <a class="btn btn-success form-control">Back to List</a>
+                    <a asp-action="Index" class="btn btn-success form-control">Back to List</a>
                 </div>
             </div>
         </div>
         <div class="col-4 text-right" style="width:250px;">
-            <img src="https://via.placeholder.com/150" width="100%" />
+            @if (Model.Picture != null)
+            {
+                var base64 = Convert.ToBase64String(Model.Picture);
+                var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
+                <img src="@imgsrc" width="100%" />
+            }
         </div>
     </div>
 
 </form>
+
+
+@section scripts{
+
+    <script>
+        $(function () {
+            $('#datepicker').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "1500:2020"
+            });
+        })
+    </script>
+}
+
+@{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
