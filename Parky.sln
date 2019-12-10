@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29519.87
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkyAPI", "ParkyAPI\ParkyAPI.csproj", "{2A6F02EE-385A-4AD1-8BA1-F1EF74A0A6F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParkyAPI", "ParkyAPI\ParkyAPI.csproj", "{2A6F02EE-385A-4AD1-8BA1-F1EF74A0A6F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkyWeb", "ParkyWeb\ParkyWeb.csproj", "{1890B73B-41F4-4CC2-BEA9-7AD2A4EEE85D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{2A6F02EE-385A-4AD1-8BA1-F1EF74A0A6F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A6F02EE-385A-4AD1-8BA1-F1EF74A0A6F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A6F02EE-385A-4AD1-8BA1-F1EF74A0A6F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1890B73B-41F4-4CC2-BEA9-7AD2A4EEE85D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1890B73B-41F4-4CC2-BEA9-7AD2A4EEE85D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1890B73B-41F4-4CC2-BEA9-7AD2A4EEE85D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1890B73B-41F4-4CC2-BEA9-7AD2A4EEE85D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
