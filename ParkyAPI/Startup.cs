@@ -40,12 +40,12 @@ namespace ParkyAPI
             services.AddScoped<ITrailRepository, TrailRepository>();
             services.AddAutoMapper(typeof(ParkyMappings));
             services.AddSwaggerGen(options=> {
-                options.SwaggerDoc("ParkyOpenAPISpec",
+                options.SwaggerDoc("ParkyOpenAPISpecNP",
                     new Microsoft.OpenApi.Models.OpenApiInfo()
                     {
-                        Title = "Parky API",
+                        Title = "Parky API (National Park)",
                         Version = "1",
-                        Description="Udemy Parky API",
+                        Description="Udemy Parky API NP",
                         Contact = new Microsoft.OpenApi.Models.OpenApiContact()
                         {
                             Email = "bhrugen.udemy@gmail.com",
@@ -59,6 +59,26 @@ namespace ParkyAPI
                         }
                         
                     });
+
+                options.SwaggerDoc("ParkyOpenAPISpecTrails",
+                   new Microsoft.OpenApi.Models.OpenApiInfo()
+                   {
+                       Title = "Parky API Trails",
+                       Version = "1",
+                       Description = "Udemy Parky API Trails",
+                       Contact = new Microsoft.OpenApi.Models.OpenApiContact()
+                       {
+                           Email = "bhrugen.udemy@gmail.com",
+                           Name = "Bhrugen Patel",
+                           Url = new Uri("https://wwww.bhrugen.com")
+                       },
+                       License = new Microsoft.OpenApi.Models.OpenApiLicense()
+                       {
+                           Name = "MIT License",
+                           Url = new Uri("https://en.wikipedia.org/wiki/MIT_License")
+                       }
+
+                   });
                 var xmlCommentFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var cmlCommentsFullPath = Path.Combine(AppContext.BaseDirectory, xmlCommentFile);
                 options.IncludeXmlComments(cmlCommentsFullPath);
@@ -77,7 +97,8 @@ namespace ParkyAPI
             app.UseHttpsRedirection();
             app.UseSwagger();
             app.UseSwaggerUI(options=> {
-                options.SwaggerEndpoint("/swagger/ParkyOpenAPISpec/swagger.json", "Parky API");
+                options.SwaggerEndpoint("/swagger/ParkyOpenAPISpecNP/swagger.json", "Parky API NP");
+                options.SwaggerEndpoint("/swagger/ParkyOpenAPISpecTrails/swagger.json", "Parky API Trails");
                 options.RoutePrefix = "";
             });
             app.UseRouting();
