@@ -18,6 +18,9 @@ using AutoMapper;
 using ParkyAPI.ParkyMapper;
 using System.Reflection;
 using System.IO;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.Extensions.Options;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace ParkyAPI
 {
@@ -45,57 +48,60 @@ namespace ParkyAPI
                 options.DefaultApiVersion = new ApiVersion(1, 0);
                 options.ReportApiVersions = true;
             });
+            services.AddVersionedApiExplorer(options => options.GroupNameFormat = "'v'VVV");
+            services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+            services.AddSwaggerGen();
 
 
-            services.AddSwaggerGen(options=> {
-                options.SwaggerDoc("ParkyOpenAPISpec",
-                    new Microsoft.OpenApi.Models.OpenApiInfo()
-                    {
-                        Title = "Parky API",
-                        Version = "1",
-                        Description="Udemy Parky API NP",
-                        Contact = new Microsoft.OpenApi.Models.OpenApiContact()
-                        {
-                            Email = "bhrugen.udemy@gmail.com",
-                            Name = "Bhrugen Patel",
-                            Url = new Uri("https://wwww.bhrugen.com")
-                        },
-                        License = new Microsoft.OpenApi.Models.OpenApiLicense()
-                        {
-                            Name = "MIT License",
-                            Url = new Uri("https://en.wikipedia.org/wiki/MIT_License")
-                        }
+            //services.AddSwaggerGen(options=> {
+            //    options.SwaggerDoc("ParkyOpenAPISpec",
+            //        new Microsoft.OpenApi.Models.OpenApiInfo()
+            //        {
+            //            Title = "Parky API",
+            //            Version = "1",
+            //            Description="Udemy Parky API NP",
+            //            Contact = new Microsoft.OpenApi.Models.OpenApiContact()
+            //            {
+            //                Email = "bhrugen.udemy@gmail.com",
+            //                Name = "Bhrugen Patel",
+            //                Url = new Uri("https://wwww.bhrugen.com")
+            //            },
+            //            License = new Microsoft.OpenApi.Models.OpenApiLicense()
+            //            {
+            //                Name = "MIT License",
+            //                Url = new Uri("https://en.wikipedia.org/wiki/MIT_License")
+            //            }
                         
-                    });
+            //        });
 
-                //options.SwaggerDoc("ParkyOpenAPISpecTrails",
-                //   new Microsoft.OpenApi.Models.OpenApiInfo()
-                //   {
-                //       Title = "Parky API Trails",
-                //       Version = "1",
-                //       Description = "Udemy Parky API Trails",
-                //       Contact = new Microsoft.OpenApi.Models.OpenApiContact()
-                //       {
-                //           Email = "bhrugen.udemy@gmail.com",
-                //           Name = "Bhrugen Patel",
-                //           Url = new Uri("https://wwww.bhrugen.com")
-                //       },
-                //       License = new Microsoft.OpenApi.Models.OpenApiLicense()
-                //       {
-                //           Name = "MIT License",
-                //           Url = new Uri("https://en.wikipedia.org/wiki/MIT_License")
-                //       }
+            //    //options.SwaggerDoc("ParkyOpenAPISpecTrails",
+            //    //   new Microsoft.OpenApi.Models.OpenApiInfo()
+            //    //   {
+            //    //       Title = "Parky API Trails",
+            //    //       Version = "1",
+            //    //       Description = "Udemy Parky API Trails",
+            //    //       Contact = new Microsoft.OpenApi.Models.OpenApiContact()
+            //    //       {
+            //    //           Email = "bhrugen.udemy@gmail.com",
+            //    //           Name = "Bhrugen Patel",
+            //    //           Url = new Uri("https://wwww.bhrugen.com")
+            //    //       },
+            //    //       License = new Microsoft.OpenApi.Models.OpenApiLicense()
+            //    //       {
+            //    //           Name = "MIT License",
+            //    //           Url = new Uri("https://en.wikipedia.org/wiki/MIT_License")
+            //    //       }
 
-                //   });
-                var xmlCommentFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                var cmlCommentsFullPath = Path.Combine(AppContext.BaseDirectory, xmlCommentFile);
-                options.IncludeXmlComments(cmlCommentsFullPath);
-            });
+            //    //   });
+            //    var xmlCommentFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            //    var cmlCommentsFullPath = Path.Combine(AppContext.BaseDirectory, xmlCommentFile);
+            //    options.IncludeXmlComments(cmlCommentsFullPath);
+            //});
             services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
         {
             if (env.IsDevelopment())
             {
