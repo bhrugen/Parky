@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ParkyAPI.Repository.IRepository
 {
-    interface IUserRepository
+    public interface IUserRepository
     {
         bool IsUniqueUser(string username);
         User Authenticate(string username, string password);
