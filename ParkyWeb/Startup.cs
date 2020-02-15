@@ -34,9 +34,8 @@ namespace ParkyWeb
                     options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
                     options.LoginPath = "/Home/Login";
                     options.AccessDeniedPath = "/Home/AccessDenied";
-                    options.SlidingExpiration = true;
+                    options.SlidingExpiration=true;
                 });
-            services.AddHttpContextAccessor();
             services.AddScoped<INationalParkRepository, NationalParkRepository>();
             services.AddScoped<ITrailRepository, TrailRepository>();
             services.AddScoped<IAccountRepository, AccountRepository>();
@@ -76,8 +75,9 @@ namespace ParkyWeb
              .AllowAnyHeader());
 
             app.UseSession();
-            app.UseAuthorization();
             app.UseAuthentication();
+            app.UseAuthorization();
+           
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

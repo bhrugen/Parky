@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ParkyWeb.Models;
@@ -10,6 +11,7 @@ using ParkyWeb.Repository.IRepository;
 
 namespace ParkyWeb.Controllers
 {
+    [Authorize]
     public class NationalParksController : Controller
     {
 
@@ -25,6 +27,7 @@ namespace ParkyWeb.Controllers
             return View(new NationalPark() { });
         }
 
+        [Authorize(Roles ="Admin")]
         public async  Task<IActionResult> Upsert(int? id)
         {
             NationalPark obj = new NationalPark();
@@ -91,6 +94,7 @@ namespace ParkyWeb.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var status = await _npRepo.DeleteAsync(SD.NationalParkAPIPath, id, HttpContext.Session.GetString("JWToken"));
